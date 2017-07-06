@@ -80,7 +80,7 @@ export class NgUploaderService {
   handleFiles(files: FileList): void {
     this.fileList = files;
 
-    this.files.push(...[].map.call(files, (file: File, i: number) => {
+    this.files = [].map.call(files, (file: File, i: number) => {
       const uploadFile: UploadFile = {
         fileIndex: i,
         id: this.generateId(),
@@ -100,9 +100,9 @@ export class NgUploaderService {
         lastModifiedDate: file.lastModifiedDate
       };
 
-      this.serviceEvents.emit({ type: 'addedToQueue', file: uploadFile });
+      this.serviceEvents.emit({ type: 'addedToQueue', file: uploadFile, nativeFile: file });
       return uploadFile;
-    }));
+    });
 
     this.serviceEvents.emit({ type: 'allAddedToQueue' });
   }
